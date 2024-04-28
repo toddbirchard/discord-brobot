@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "discord-brobot"
+version = "0.1.0"
+description = "Bare implementation  of `Broiestbot` for Discord."
+authors = ["Todd Birchard <toddbirchard@gmail.com>"]
+homepage = "https://github.com/toddbirchard/discord-brobot/"
+repository = "https://github.com/toddbirchard/discord-brobot/"
+documentation = "https://github.com/toddbirchard/discord-brobot/"
+license = "MIT"
+readme = "README.md"
+keywords = ["Discord", "Bot", "Chatbot", "Python", "Discord Bot"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+discord = "*"
+SQLAlchemy = "^2.0.29"
+loguru = "^0.7.2"
+requests = "^2.31.0"
+python-dotenv = "^1.0.1"
+IMDbPY = "^2022.7.9"
+pytz = "^2024.1"
+boto = "^2.49.0"
+emoji = "*"
+gunicorn = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.2"
+black = "^24.4.2"
+isort = "^5.13.2"
+coverage = "^7.5.0"
+flake8 = "^7.0.0"
+pylint = "^3.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+run = "asgi:init_bot"
+
+[tool.poetry.urls]
+issues = "https://github.com/toddbirchard/discord-brobot/issues"
+
+[tool.isort]
+profile = "black"
+line_length = 125

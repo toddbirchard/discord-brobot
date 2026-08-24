@@ -21,7 +21,7 @@ IMDbPY = "^2022.7.9"
 pytz = "^2024.1"
 boto = "^2.49.0"
 emoji = "*"
-gunicorn = "*"
+uvicorn = "*"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1.2"
@@ -36,7 +36,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-run = "asgi:init_bot"
+run = "asgi:main"
 
 [tool.poetry.urls]
 issues = "https://github.com/toddbirchard/discord-brobot/issues"

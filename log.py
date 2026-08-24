@@ -1,6 +1,7 @@
 """Custom logger."""
 
 import json
+import traceback
 from os import path
 from sys import stdout
 
@@ -34,7 +35,13 @@ def json_formatter(record: dict) -> str:
             "module": log.get("name"),
         }
         if log.get("exception", None):
-            subset.update({"exception": log["exception"]})
+            subset.update(
+                {
+                    "exception": "".join(
+                        traceback.format_exception(*log["exception"])
+                    ).strip()
+                }
+            )
         return json.dumps(subset)
 
     record["extra"]["serialized"] = serialize(record)
@@ -50,18 +57,18 @@ def log_formatter(record: dict) -> str:
     :returns: str
     """
     if record["level"].name == "TRACE":
-        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #d2eaff>{level}</fg #d2eaff>: <light-white>{message}</light-white>\n"
+        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #d2eaff>{level}</fg #d2eaff>: <light-white>{message}</light-white>\n{exception}"
     if record["level"].name == "INFO":
-        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #98bedf>{level}</fg #98bedf>: <light-white>{message}</light-white>\n"
+        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #98bedf>{level}</fg #98bedf>: <light-white>{message}</light-white>\n{exception}"
     if record["level"].name == "WARNING":
-        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> |  <fg #b09057>{level}</fg #b09057>: <light-white>{message}</light-white>\n"
+        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> |  <fg #b09057>{level}</fg #b09057>: <light-white>{message}</light-white>\n{exception}"
     if record["level"].name == "SUCCESS":
-        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #6dac77>{level}</fg #6dac77>: <light-white>{message}</light-white>\n"
+        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #6dac77>{level}</fg #6dac77>: <light-white>{message}</light-white>\n{exception}"
     if record["level"].name == "ERROR":
-        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #a35252>{level}</fg #a35252>: <light-white>{message}</light-white>\n"
+        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #a35252>{level}</fg #a35252>: <light-white>{message}</light-white>\n{exception}"
     if record["level"].name == "CRITICAL":
-        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #521010>{level}</fg #521010>: <light-white>{message}</light-white>\n"
-    return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #98bedf>{level}</fg #98bedf>: <light-white>{message}</light-white>\n"
+        return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #521010>{level}</fg #521010>: <light-white>{message}</light-white>\n{exception}"
+    return "<fg #5278a3>{time:MM-DD-YYYY HH:mm:ss}</fg #5278a3> | <fg #98bedf>{level}</fg #98bedf>: <light-white>{message}</light-white>\n{exception}"
 
 
 def create_logger() -> logger:
@@ -77,6 +84,8 @@ def create_logger() -> logger:
         catch=True,
         level="TRACE",
         format=log_formatter,
+        backtrace=True,
+        diagnose=False,
     )
     if ENVIRONMENT == "production" and path.isdir("/var/log/api"):
         # Datadog JSON logs
@@ -86,6 +95,8 @@ def create_logger() -> logger:
             rotation="200 MB",
             level="TRACE",
             compression="zip",
+            backtrace=True,
+            diagnose=False,
         )
         # Readable logs
         logger.add(
@@ -96,6 +107,8 @@ def create_logger() -> logger:
             format=log_formatter,
             rotation="200 MB",
             compression="zip",
+            backtrace=True,
+            diagnose=False,
         )
     else:
         logger.add(
@@ -106,6 +119,8 @@ def create_logger() -> logger:
             rotation="200 MB",
             compression="zip",
             level="ERROR",
+            backtrace=True,
+            diagnose=False,
         )
     return logger
 

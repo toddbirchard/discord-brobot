@@ -5,18 +5,14 @@ from discord.ext.commands import Bot
 from log import LOGGER
 
 
-def bot_events(bot) -> Bot:
+def bot_events(bot: Bot) -> Bot:
     """Register actions to be taken upon room actions."""
 
     @bot.event
-    async def on_message(message) -> None:
-        """Log chat messages"""
-        # print(bot.__dict__.keys())
-        LOGGER.info(f"[{bot.user.name}]: {message}")
-
-    @bot.event
-    async def on_error(event, *args) -> None:
-        """Log chat messages"""
-        LOGGER.error(f'Unhandled error: {event} | args: {" ".join(args)}')
+    async def on_error(event, *args, **kwargs) -> None:
+        """Log unhandled errors raised by event handlers."""
+        LOGGER.exception(
+            f"Unhandled error in event `{event}` | args: {', '.join(repr(arg) for arg in args)}"
+        )
 
     return bot

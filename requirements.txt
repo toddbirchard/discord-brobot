@@ -8,14 +8,6 @@ async-timeout==4.0.3 ; python_full_version < '3.11'
     # via aiohttp
 attrs==23.2.0
     # via aiohttp
-boto==2.49.0
-    # via discord-brobot
-certifi==2024.2.2
-    # via requests
-charset-normalizer==3.3.2
-    # via requests
-cinemagoer==2023.5.1
-    # via imdbpy
 click==8.1.7
     # via uvicorn
 colorama==0.4.6 ; sys_platform == 'win32'
@@ -26,26 +18,16 @@ discord==2.3.2
     # via discord-brobot
 discord-py==2.3.2
     # via discord
-emoji==2.11.1
-    # via discord-brobot
 frozenlist==1.4.1
     # via
     #   aiohttp
     #   aiosignal
-greenlet==3.0.3 ; platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'
-    # via sqlalchemy
 h11==0.16.0
     # via uvicorn
 idna==3.7
-    # via
-    #   requests
-    #   yarl
-imdbpy==2022.7.9
-    # via discord-brobot
+    # via yarl
 loguru==0.7.2
     # via discord-brobot
-lxml==5.2.1
-    # via cinemagoer
 multidict==6.0.5
     # via
     #   aiohttp
@@ -54,18 +36,8 @@ python-dotenv==1.0.1
     # via discord-brobot
 pytz==2024.1
     # via discord-brobot
-requests==2.31.0
-    # via discord-brobot
-sqlalchemy==2.0.29
-    # via
-    #   cinemagoer
-    #   discord-brobot
-typing-extensions==4.11.0
-    # via
-    #   sqlalchemy
-    #   uvicorn
-urllib3==2.2.1
-    # via requests
+typing-extensions==4.11.0 ; python_full_version < '3.11'
+    # via uvicorn
 uvicorn==0.52.4
     # via discord-brobot
 win32-setctime==1.1.0 ; sys_platform == 'win32'

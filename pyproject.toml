@@ -9,14 +9,9 @@ keywords = ["Discord", "Bot", "Chatbot", "Python", "Discord Bot"]
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "discord",
-    "sqlalchemy>=2.0.29,<3.0.0",
     "loguru>=0.7.2,<0.8.0",
-    "requests>=2.31.0,<3.0.0",
     "python-dotenv>=1.0.1,<2.0.0",
-    "imdbpy>=2022.7.9,<2023.0.0",
     "pytz>=2024.1,<2025.0.0",
-    "boto>=2.49.0,<3.0.0",
-    "emoji",
     "uvicorn",
 ]
 
